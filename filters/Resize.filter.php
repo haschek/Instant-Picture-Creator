@@ -48,6 +48,35 @@ class Resize extends InstantFilter
     		$this->checkSecurity($newHeight,$this->security['min-height'],$this->security['max-height']);
     		$this->checkSecurity($newWidth*$newHeight,$this->security['min-dim'],$this->security['max-dim']);
     	}
+    	elseif ($parameter[1] == 'cutout')
+    	{
+            $newWidth = $parameter[2];
+            $newHeight = $parameter[3];
+            
+            $oldRatio = $oldWidth/$oldHeight;
+            $newRatio = $newWidth/$newHeight;
+            
+            if ($oldRatio != $newRatio)
+            {
+                if ($oldRatio > $newRatio)
+                {
+                    $temp = $oldWidth - $newWidth*($oldHeight/$newHeight);
+                    $startX = intval($temp/2);
+                    $oldWidth = intval($oldWidth - $temp);
+                }
+                else
+                {
+                    $temp = $oldHeight - $newHeight*($oldWidth/$newWidth);
+                    $startY = intval($temp/2);
+                    $oldHeight = intval($oldHeight - $temp);
+                }
+            }
+    	    
+    		// security check of dimensions
+    		$this->checkSecurity($newWidth,$this->security['min-width'],$this->security['max-width']);
+    		$this->checkSecurity($newHeight,$this->security['min-height'],$this->security['max-height']);
+    		$this->checkSecurity($newWidth*$newHeight,$this->security['min-dim'],$this->security['max-dim']);
+    	}
     	elseif ($parameter[1] == 'exact')
     	{
             $newWidth = $parameter[2];
