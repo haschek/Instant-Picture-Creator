@@ -35,4 +35,3 @@ $defaultfilter = 'nofilter'; // default filter used for images requested without
 
 # User Preferences --- End
 
-?>
