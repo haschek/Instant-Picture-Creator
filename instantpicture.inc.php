@@ -45,13 +45,12 @@ class InstantPicture
     var $debugtype = 'jpg';
 
 
-    function InstantPicture($config=array(),$imagefile=null,$filters=array())
+    function InstantPicture($config = array(), $imagefile = null, $filters = array())
     {
-
-        if ($config['quality']) $this->quality = $config['quality'];
-        if ($config['debug']) $this->debug = $config['debug'];
-        if ($config['debugtype']) $this->debugtype = $config['debugtype'];
-        return $this->apply($imagefile,$filters);
+        $this->quality   = (isset($config['quality']))   ? $config['quality']   : $this->quality;
+        $this->debug     = (isset($config['debug']))     ? $config['debug']     : $this->debug;
+        $this->debugtype = (isset($config['debugtype'])) ? $config['debugtype'] : $this->debugtype;
+        return $this->apply($imagefile, $filters);
     }
 
     function setImageType($type)
@@ -226,6 +225,8 @@ class InstantPicture
 
     function applyFilters($filters)
     {
+        // preset to true in order to allow an empty filters array
+        $r = true;
         foreach ($filters as $filter)
         {
             $r = $this->applyFilter($filter);
